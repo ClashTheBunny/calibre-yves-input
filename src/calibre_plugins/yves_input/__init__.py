@@ -60,7 +60,7 @@ class YVES2ZIP(HTML2ZIP):
                 # DEST.write(chapter['human'])
                 # DEST.write('</a>')
                 # DEST.write('\n<br />\n')
-                chapterLines = readFile( os.path.join(yvesDir,book['usfm'],chapterFile + ".yves"))
+                chapterLines = readFile( os.path.join(yvesDir,book['usfm'],chapterFile + ".yves")).splitlines()
                 DEST.writelines( chapterLines[2:len(chapterLines)-2] )
             DEST.write('</div>\n')
         DEST.write( '</body></html>\n' )
