@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # vim:fileencoding=utf-8
 from calibre.ptempfile import PersistentTemporaryDirectory
-import os, json, StringIO
+import os, json
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Randall Mason <Randall@Mason.CH>'
@@ -18,27 +18,18 @@ class YVES2ZIP(HTML2ZIP):
     supported_platforms = ['linux','osx','windows']
     file_types = set(['yves'])
     minimum_calibre_version = (2, 3, 0)
-    version = (0, 0, 1)
+    version = (0, 0, 3)
     on_import = True
-
-    def openFile(path, mode='r'):
-        if os.path.exists(path):
-            file = open(path, mode)
-        else:
-            file = StringIO.StringIO(readFile(re.sub("html","yves",path)))
-        return file
 
     def run(self, yvesfile):
         yves_temp_directory = PersistentTemporaryDirectory('yves_input')
-        log.debug('Convert yves ' + yvesfile + ' to html')
+
         manifestJson = readFile(yvesfile)
 
         yvesDir = os.path.dirname(yvesfile)
 
         bibleMetaData = json.loads(manifestJson)
         bibleName = bibleMetaData['local_abbreviation'] + ".html"
-
-        log.debug(manifestJson)
 
         DEST = open(os.path.join(yves_temp_directory, bibleName), 'w')
         DEST.write( '<html><head><title>' )
@@ -63,7 +54,7 @@ class YVES2ZIP(HTML2ZIP):
                 # DEST.write(chapter['human'])
                 # DEST.write('</a>')
                 # DEST.write('\n<br />\n')
-                chapterLines = self.openFile( os.path.join(yvesDir,book['usfm'],chapterFile + ".html")).readlines()
+                chapterLines = readFile( os.path.join(yvesDir,book['usfm'],chapterFile + ".yves"))
                 DEST.writelines( chapterLines[2:len(chapterLines)-2] )
             DEST.write('</div>\n')
         DEST.write( '</body></html>\n' )
