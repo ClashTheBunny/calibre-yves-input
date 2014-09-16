@@ -3,11 +3,13 @@
 import sys
 
 def readFile(paramFile):
-    i = 0
-    byteArray = []
-    arrayOfByte = []
     file = open(paramFile, 'r')
     arrayOfByte = file.read()
+    return readString(arrayOfByte)
+
+def readString(arrayOfByte):
+    i = 0
+    byteArray = []
     while (i < len(arrayOfByte)):
       if (len(arrayOfByte) > i + 1):
         j = ((int('0xFF',16) & ord(arrayOfByte[(i + 1)])) >> 5 | (int('0xFF',16) & ord(arrayOfByte[(i + 1)])) << 3)

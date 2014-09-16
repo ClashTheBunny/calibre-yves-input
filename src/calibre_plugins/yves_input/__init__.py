@@ -25,22 +25,28 @@ class YVES2ZIP(HTML2ZIP):
         yves_temp_directory = PersistentTemporaryDirectory('yves_input')
 
         manifestJson = readFile(yvesfile)
+        # for iOS bibles, everything is stored in a plist, eventually use something like this:
+        # xmltodict.parse(plistDecode.plistFromString(base64.decodestring(xmltodict.parse(plistDecode.plistFromFile('tv.lifechurch.bible.plist','xml1'))['plist']['dict']['dict'][0]['data'][0]),'xml1'))
 
         yvesDir = os.path.dirname(yvesfile)
 
         bibleMetaData = json.loads(manifestJson)
-        bibleName = bibleMetaData['local_abbreviation'] + ".html"
+        bibleName = bibleMetaData['abbreviation'] + ".html"
 
         DEST = open(os.path.join(yves_temp_directory, bibleName), 'w')
         DEST.write( '<html><head><title>' )
-        DEST.write( bibleMetaData['title'].encode('utf8') )
+        DEST.write( bibleMetaData['local_title'].encode('utf8') )
         DEST.write( '</title>\n')
+        DEST.write( '<meta name="Publisher" content="' + bibleMetaData['publisher']['name'].encode('utf8') + '">\n')
+        DEST.write( '<meta name="Copyright" content="' + bibleMetaData['copyright_long']['text'].encode('utf8') + '">\n')
+        DEST.write( '<meta name="DC.language" content="' + bibleMetaData['language']['iso_639_1'].encode('utf8') + '">\n')
+        DEST.write( '<meta name="Source" content="YouVersion">\n')
         DEST.write( '<style type="text/css">' )
         DEST.write( '</style>' )
         DEST.write( '</head><body>\n' )
         for book in bibleMetaData['books']:
             DEST.write('<div class="book">\n<div class="bookTitle">')
-            DEST.write(book['abbreviation'].encode('utf8'))
+            DEST.write(book['human_long'].encode('utf8'))
             DEST.write('</div>\n')
             for chapter in book['chapters']:
                 chapterFile = chapter['usfm'][len(book['usfm'])+1:]
