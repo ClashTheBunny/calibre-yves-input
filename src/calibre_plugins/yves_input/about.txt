@@ -1,0 +1,7 @@
+yves converter
+===========================
+yves conveter will take the manifest.yves file from any YouVersion bible from you .youversion/bibles directory on your android SD Card.
+
+Created by Randall Mason
+
+Requires calibre >= 2.3  At least that's all I've tested it with.

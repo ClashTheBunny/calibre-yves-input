@@ -1,4 +1,6 @@
-calibre-doc-input
+calibre-yves-input
 =================
 
-Calibre plugin for converting doc via docx using microsoft  wordconv.exe tool and calibre docx transformation
+Calibre plugin for converting YouVersion yves bibles.
+Give it the manifest.yves from your android's
+.youversion/bibles/<bible> directory and off it goes!
