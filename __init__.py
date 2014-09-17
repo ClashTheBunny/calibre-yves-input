@@ -18,7 +18,7 @@ class YVES2ZIP(HTML2ZIP):
     supported_platforms = ['linux','osx','windows']
     file_types = set(['yves'])
     minimum_calibre_version = (2, 3, 0)
-    version = (0, 0, 4)
+    version = (0, 0, 5)
     on_import = True
 
     def run(self, yvesfile):
