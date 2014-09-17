@@ -18,7 +18,7 @@ class YVES2ZIP(HTML2ZIP):
     supported_platforms = ['linux','osx','windows']
     file_types = set(['yves'])
     minimum_calibre_version = (2, 3, 0)
-    version = (0, 0, 3)
+    version = (0, 0, 4)
     on_import = True
 
     def run(self, yvesfile):
@@ -34,16 +34,16 @@ class YVES2ZIP(HTML2ZIP):
         bibleName = bibleMetaData['abbreviation'] + ".html"
 
         DEST = open(os.path.join(yves_temp_directory, bibleName), 'w')
-        DEST.write( '<html><head><title>' )
+        DEST.write( '<html dir="' + bibleMetaData['language']['text_direction'].encode('utf8') + '"><head><title>' )
         DEST.write( bibleMetaData['local_title'].encode('utf8') )
         DEST.write( '</title>\n')
-        if( bibleMetaData.has_key('publisher') & bibleMetaData['publisher'].has_key('name') ):
+        if( bibleMetaData.has_key('publisher') & bibleMetaData['publisher'].has_key('name') & ( bibleMetaData['publisher']['name'] != None ) ):
             DEST.write( '<meta name="Publisher" content="' + bibleMetaData['publisher']['name'].encode('utf8') + '">\n')
-        if( bibleMetaData.has_key('copyright_long') & bibleMetaData['copyright_long'].has_key('text') ):
+        if( bibleMetaData.has_key('copyright_long') & bibleMetaData['copyright_long'].has_key('text') & ( bibleMetaData['copyright_long']['text'] != None ) ):
             DEST.write( '<meta name="Copyright" content="' + bibleMetaData['copyright_long']['text'].encode('utf8') + '">\n')
-        if( bibleMetaData.has_key('language') & bibleMetaData['language'].has_key('iso_639_1') ):
+        if( bibleMetaData.has_key('language') & bibleMetaData['language'].has_key('iso_639_1') & ( bibleMetaData['language']['iso_639_1'] != None ) ):
             DEST.write( '<meta name="DC.language" content="' + bibleMetaData['language']['iso_639_1'].encode('utf8') + '">\n')
-        elif( bibleMetaData.has_key('language') & bibleMetaData['language'].has_key('iso_639_3') ):
+        elif( bibleMetaData.has_key('language') & bibleMetaData['language'].has_key('iso_639_3') & ( bibleMetaData['language']['iso_639_3'] != None ) ):
             DEST.write( '<meta name="DC.language" content="' + bibleMetaData['language']['iso_639_3'].encode('utf8') + '">\n')
         DEST.write( '<meta name="Source" content="YouVersion">\n')
         DEST.write( '<style type="text/css">' )
