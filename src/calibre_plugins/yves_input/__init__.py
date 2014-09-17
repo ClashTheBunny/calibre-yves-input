@@ -37,9 +37,14 @@ class YVES2ZIP(HTML2ZIP):
         DEST.write( '<html><head><title>' )
         DEST.write( bibleMetaData['local_title'].encode('utf8') )
         DEST.write( '</title>\n')
-        DEST.write( '<meta name="Publisher" content="' + bibleMetaData['publisher']['name'].encode('utf8') + '">\n')
-        DEST.write( '<meta name="Copyright" content="' + bibleMetaData['copyright_long']['text'].encode('utf8') + '">\n')
-        DEST.write( '<meta name="DC.language" content="' + bibleMetaData['language']['iso_639_1'].encode('utf8') + '">\n')
+        if( bibleMetaData.has_key('publisher') & bibleMetaData['publisher'].has_key('name') ):
+            DEST.write( '<meta name="Publisher" content="' + bibleMetaData['publisher']['name'].encode('utf8') + '">\n')
+        if( bibleMetaData.has_key('copyright_long') & bibleMetaData['copyright_long'].has_key('text') ):
+            DEST.write( '<meta name="Copyright" content="' + bibleMetaData['copyright_long']['text'].encode('utf8') + '">\n')
+        if( bibleMetaData.has_key('language') & bibleMetaData['language'].has_key('iso_639_1') ):
+            DEST.write( '<meta name="DC.language" content="' + bibleMetaData['language']['iso_639_1'].encode('utf8') + '">\n')
+        elif( bibleMetaData.has_key('language') & bibleMetaData['language'].has_key('iso_639_3') ):
+            DEST.write( '<meta name="DC.language" content="' + bibleMetaData['language']['iso_639_3'].encode('utf8') + '">\n')
         DEST.write( '<meta name="Source" content="YouVersion">\n')
         DEST.write( '<style type="text/css">' )
         DEST.write( '</style>' )
