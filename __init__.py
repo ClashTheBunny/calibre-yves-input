@@ -8,7 +8,6 @@ __copyright__ = '2014, Randall Mason <Randall@Mason.CH>'
 import os
 
 from calibre.customize import FileTypePlugin
-from calibre.ebooks.html.to_zip import HTML2ZIP
 from calibre_plugins.yves_input.yvesDecode import yvesDir2HTML
 
 class YVES2ZIP(FileTypePlugin):
@@ -18,11 +17,12 @@ class YVES2ZIP(FileTypePlugin):
     description = _('Convert YVES files to HTMLZ')
     supported_platforms = ['linux','osx','windows']
     file_types = set(['yves'])
-    minimum_calibre_version = (2, 3, 0)
+    minimum_calibre_version = (1, 25, 0)
     version = (0, 0, 7)
     on_import = True
 
     def run(self, yvesfile):
+        from calibre.ebooks.html.to_zip import HTML2ZIP
         html2zip = HTML2ZIP(None)
         yves_temp_directory = PersistentTemporaryDirectory('yves_input')
         bibleName = yvesDir2HTML(yvesfile,yves_temp_directory)
