@@ -3,7 +3,7 @@
 import sys, os, json
 
 def readFile(paramFile):
-    file = open(paramFile, 'r')
+    file = open(paramFile, 'rb')
     arrayOfByte = file.read()
     return readString(arrayOfByte)
 
