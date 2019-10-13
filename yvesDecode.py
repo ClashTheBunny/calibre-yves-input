@@ -26,7 +26,11 @@ def loadJson(string):
 def yvesDir2HTML(yvesfile, yves_temp_directory):
         # for iOS bibles, everything is stored in a plist, eventually use something like this:
         # xmltodict.parse(plistDecode.plistFromString(base64.decodestring(xmltodict.parse(plistDecode.plistFromFile('tv.lifechurch.bible.plist','xml1'))['plist']['dict']['dict'][0]['data'][0]),'xml1'))
-        bibleMetaData = loadJson(readFile(yvesfile))
+        try:
+            with open(yvesfile, 'rb') as json_file:
+                bibleMetaData = json.load(json_file)
+        except:
+            bibleMetaData = loadJson(readFile(yvesfile))
 
         yvesDir = os.path.dirname(yvesfile)
 
@@ -64,8 +68,11 @@ def yvesDir2HTML(yvesfile, yves_temp_directory):
                 # DEST.write(chapter['human'])
                 # DEST.write('</a>')
                 # DEST.write('\n<br />\n')
-                chapterLines = readFile( os.path.join(yvesDir,book['usfm'],chapterFile + ".yves")).splitlines()
-                DEST.writelines( chapterLines[2:len(chapterLines)-2] )
+                try:
+                    chapterLines = readFile( os.path.join(yvesDir,book['usfm'],chapterFile + ".yves")).splitlines()
+                except:
+                    chapterLines = json.loads(readFile( os.path.join(yvesDir,chapter['usfm'])))['content'].splitlines()
+                DEST.writelines( [line.encode('utf8') for line in chapterLines[2:len(chapterLines)-2] ] )
             DEST.write('</div>\n')
         DEST.write( '</body></html>\n' )
 

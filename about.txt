@@ -2,6 +2,8 @@ yves converter
 ===========================
 yves conveter will take the manifest.yves file from any YouVersion bible from you .youversion/bibles directory on your android SD Card.
 
+With newer versions of the bible app, all the files come in one directory with a `_version_` file that you need to rename to something with a YVES extension, like `bible.yves`.
+
 Created by Randall Mason
 
 Requires calibre >= 2.3  At least that's all I've tested it with.
