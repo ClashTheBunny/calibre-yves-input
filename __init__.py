@@ -3,7 +3,7 @@
 from calibre.ptempfile import PersistentTemporaryDirectory
 
 __license__ = 'GPL v3'
-__copyright__ = '2014, Randall Mason <Randall@Mason.CH>'
+__copyright__ = '2019, Randall Mason <Randall@Mason.CH>'
 
 import os
 
@@ -18,7 +18,7 @@ class YVES2ZIP(FileTypePlugin):
     supported_platforms = ['linux','osx','windows']
     file_types = set(['yves'])
     minimum_calibre_version = (1, 25, 0)
-    version = (0, 0, 7)
+    version = (0, 0, 8)
     on_import = True
 
     def run(self, yvesfile):
